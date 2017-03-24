@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+  <head>
+    <script src="angular.min.js"></script>
+    <script src="angular-ui-router.min.js"></script>
+    <script src="angular-sanitize.min.js"></script>
+    <script src="app.js"></script>
+    <script src="factories/clientFactory.js"></script>
+    <script src="controllers/clientController.js"></script>
+    <script src="router/route.js"></script>
+    
+  </head>
+  <body ng-app="todoApp">
+    <div ng-controller="clientController">
+        
+        <table>
+          <tr ng-repeat="client in clients | filter:recherche">
+            <td>{{client.nom}}</td>
+            <td>{{client.prenom}}</td>
+            <td>{{client.age}}</td>
+            <td><button ng-click="deleteClient(client.id)" ng-model="inter">Supprimer</button></td>
+            <td><button ng-click="getInterationByClient(client.id)">Interations</button></td>
+            <td><a ui-sref="interaction({ clientId: client.id })" ui-sref-active="active">Voir interation </a></td>
+            <ui-view></ui-view>
+          </tr>
+          <form ng-submit="ajouterClient()">
+            <input type="text" placeholder="Nom" ng-model="txtNom"/>
+            <input type="text" placeholder="Prenom" ng-model="txtPrenom"/>
+            <input type="number" placeholder="Age" ng-model="txtAge"/>
+            <input type="submit" value="Ajouter"/>
+          </form></br>
+          <input type="text" placeholder="rechercher" ng-model="recherche">
+        </table>
+        
+        </br>
+        <table>
+            <tr ng-repeat="interaction in interactions">
+                <td>{{interaction.id}}</td>
+                <td>{{interaction.date}}</td>
+                <td>{{interaction.objet}}</td>
+                <td>{{interaction.description}}</td>
+            </tr>
+        </table>
+        </br>
+        <a ui-sref="interaction" ui-sref-active="active"> Test</a> 
+        <ui-view></ui-view>
+    </div>
+  </body>
+</html>
